@@ -41,15 +41,15 @@ class AppFixtures extends Fixture
 
         $reponse_option1 = new QuestionOption();
         $reponse_option1->setName("12-13h");
-        $reponse_option1->addQuestion($question_multi);
+        $reponse_option1->setQuestion($question_multi);
 
         $reponse_option2 = new QuestionOption();
         $reponse_option2->setName("10-11H");
-        $reponse_option2->addQuestion($question_multi);
+        $reponse_option2->setQuestion($question_multi);
 
         $reponse_option3 = new QuestionOption();
         $reponse_option3->setName("18-18H");
-        $reponse_option3->addQuestion($question_multi);
+        $reponse_option3->setQuestion($question_multi);
 
         $manager->persist($question_multi);
         $manager->persist($reponse_option1);
@@ -62,7 +62,7 @@ class AppFixtures extends Fixture
         $question_simple->setType($type_text);
 
         $reponse2_option = new QuestionOption();
-        $reponse2_option->addQuestion($question_simple);
+        $reponse2_option->setQuestion($question_simple);
         
         $manager->persist($question_simple);
         $manager->persist($reponse2_option);
@@ -73,19 +73,19 @@ class AppFixtures extends Fixture
 
         $reponse3_option1 = new QuestionOption();
         $reponse3_option1->setName("20-30 ans");
-        $reponse3_option1->addQuestion($question_bool);
+        $reponse3_option1->setQuestion($question_bool);
 
         $reponse3_option2 = new QuestionOption();
         $reponse3_option2->setName("30-40 ans");
-        $reponse3_option2->addQuestion($question_bool);
+        $reponse3_option2->setQuestion($question_bool);
 
         $reponse3_option3 = new QuestionOption();
         $reponse3_option3->setName("40-50 ans");
-        $reponse3_option3->addQuestion($question_bool);
+        $reponse3_option3->setQuestion($question_bool);
 
         $reponse3_option4 = new QuestionOption();
         $reponse3_option4->setName("50+ ans");
-        $reponse3_option4->addQuestion($question_bool);
+        $reponse3_option4->setQuestion($question_bool);
 
         
         $manager->persist($question_bool);

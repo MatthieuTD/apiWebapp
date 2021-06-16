@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Repository\TypeRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Repository\TypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,14 +27,14 @@ class Type
     private $name;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
-
-    /**
      * @ORM\OneToMany(targetEntity=Question::class, mappedBy="type")
      */
     private $questions;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
 
     public function __construct()
     {
@@ -54,18 +54,6 @@ class Type
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
 
         return $this;
     }
@@ -96,6 +84,18 @@ class Type
                 $question->setType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

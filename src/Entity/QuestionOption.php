@@ -22,23 +22,23 @@ class QuestionOption
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Question::class, inversedBy="questionOptions")
-     */
-    private $question;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=AnswerOption::class, mappedBy="questionOption")
+     * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="questionOptions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $question;
+
+    /**
+     * @ORM\OneToMany(targetEntity=AnswerOption::class, mappedBy="questionOption")
      */
     private $answerOptions;
 
     public function __construct()
     {
-        $this->question = new ArrayCollection();
         $this->answerOptions = new ArrayCollection();
     }
 
@@ -47,38 +47,26 @@ class QuestionOption
         return $this->id;
     }
 
-    /**
-     * @return Collection|Question[]
-     */
-    public function getQuestion(): Collection
-    {
-        return $this->question;
-    }
-
-    public function addQuestion(Question $question): self
-    {
-        if (!$this->question->contains($question)) {
-            $this->question[] = $question;
-        }
-
-        return $this;
-    }
-
-    public function removeQuestion(Question $question): self
-    {
-        $this->question->removeElement($question);
-
-        return $this;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(?string $name): self
+    public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getQuestion(): ?Question
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(?Question $question): self
+    {
+        $this->question = $question;
 
         return $this;
     }
@@ -95,7 +83,7 @@ class QuestionOption
     {
         if (!$this->answerOptions->contains($answerOption)) {
             $this->answerOptions[] = $answerOption;
-            $answerOption->addQuestionOption($this);
+            $answerOption->setQuestionOption($this);
         }
 
         return $this;
@@ -104,7 +92,10 @@ class QuestionOption
     public function removeAnswerOption(AnswerOption $answerOption): self
     {
         if ($this->answerOptions->removeElement($answerOption)) {
-            $answerOption->removeQuestionOption($this);
+            // set the owning side to null (unless already changed)
+            if ($answerOption->getQuestionOption() === $this) {
+                $answerOption->setQuestionOption(null);
+            }
         }
 
         return $this;

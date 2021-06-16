@@ -27,7 +27,7 @@ class Answer
     private $mail;
 
     /**
-     * @ORM\ManyToMany(targetEntity=AnswerOption::class, mappedBy="answer")
+     * @ORM\OneToMany(targetEntity=AnswerOption::class, mappedBy="answer")
      */
     private $answerOptions;
 
@@ -65,7 +65,7 @@ class Answer
     {
         if (!$this->answerOptions->contains($answerOption)) {
             $this->answerOptions[] = $answerOption;
-            $answerOption->addAnswer($this);
+            $answerOption->setAnswer($this);
         }
 
         return $this;
@@ -74,7 +74,10 @@ class Answer
     public function removeAnswerOption(AnswerOption $answerOption): self
     {
         if ($this->answerOptions->removeElement($answerOption)) {
-            $answerOption->removeAnswer($this);
+            // set the owning side to null (unless already changed)
+            if ($answerOption->getAnswer() === $this) {
+                $answerOption->setAnswer(null);
+            }
         }
 
         return $this;

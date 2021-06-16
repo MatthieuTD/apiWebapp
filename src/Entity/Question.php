@@ -33,12 +33,12 @@ class Question
     private $type;
 
     /**
-     * @ORM\ManyToMany(targetEntity=QuestionOption::class, mappedBy="question")
+     * @ORM\OneToMany(targetEntity=QuestionOption::class, mappedBy="question")
      */
     private $questionOptions;
 
     /**
-     * @ORM\ManyToMany(targetEntity=AnswerOption::class, mappedBy="question")
+     * @ORM\OneToMany(targetEntity=AnswerOption::class, mappedBy="question")
      */
     private $answerOptions;
 
@@ -89,7 +89,7 @@ class Question
     {
         if (!$this->questionOptions->contains($questionOption)) {
             $this->questionOptions[] = $questionOption;
-            $questionOption->addQuestion($this);
+            $questionOption->setQuestion($this);
         }
 
         return $this;
@@ -98,7 +98,10 @@ class Question
     public function removeQuestionOption(QuestionOption $questionOption): self
     {
         if ($this->questionOptions->removeElement($questionOption)) {
-            $questionOption->removeQuestion($this);
+            // set the owning side to null (unless already changed)
+            if ($questionOption->getQuestion() === $this) {
+                $questionOption->setQuestion(null);
+            }
         }
 
         return $this;
@@ -116,7 +119,7 @@ class Question
     {
         if (!$this->answerOptions->contains($answerOption)) {
             $this->answerOptions[] = $answerOption;
-            $answerOption->addQuestion($this);
+            $answerOption->setQuestion($this);
         }
 
         return $this;
@@ -125,7 +128,10 @@ class Question
     public function removeAnswerOption(AnswerOption $answerOption): self
     {
         if ($this->answerOptions->removeElement($answerOption)) {
-            $answerOption->removeQuestion($this);
+            // set the owning side to null (unless already changed)
+            if ($answerOption->getQuestion() === $this) {
+                $answerOption->setQuestion(null);
+            }
         }
 
         return $this;
