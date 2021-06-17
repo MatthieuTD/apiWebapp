@@ -10,17 +10,21 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use EasyCorp\Bundle\EasyAdminBundle\Contracts\Menu\MenuInterface;
-
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;
 
 class DashboardController extends AbstractDashboardController
 {
     /**
-     * @Route("/", name="admin")
+     * @Route("/test", name="admin")
      */
     public function index(): Response
     {
-        return parent::index();
+        // redirect to some CRUD controller
+        $routeBuilder = $this->get(AdminUrlGenerator::class);
+
+        return $this->redirect($routeBuilder->setController(TypeCrudController::class)->generateUrl());
+
     }
 
     public function configureDashboard(): Dashboard
@@ -31,16 +35,9 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        return [
-            MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
-
-            MenuItem::linkToCrud('Add Question', 'fa fa-tags', Question::class),
-            MenuItem::linkToCrud('Add reponses', 'fa fa-tags', QuestionOption::class),
-
-
-
-
-        ];
+        yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToCrud('Add question', 'fas fa-list', Question::class)->setAction("new");
+        yield MenuItem::linkToCrud('Add reponse', 'fas fa-list', QuestionOption::class)->setAction("new");
 
     }
 }
