@@ -18,7 +18,6 @@ class GetFormController extends AbstractController
      */
 
     public function test(Request $request) : Response{
-        dd($request);
         $reponse = new Response();
         return $this->json(['username' => 'jane.doe']);
     }
