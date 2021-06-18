@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\AnswerOption;
 use App\Entity\Question;
 use App\Entity\QuestionOption;
 use App\Entity\Type;
@@ -23,7 +24,7 @@ class DashboardController extends AbstractDashboardController
         // redirect to some CRUD controller
         $routeBuilder = $this->get(AdminUrlGenerator::class);
 
-        return $this->redirect($routeBuilder->setController(TypeCrudController::class)->generateUrl());
+        return $this->redirect($routeBuilder->setController(QuestionCrudController::class)->generateUrl());
 
     }
 
@@ -36,8 +37,13 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Add question', 'fas fa-list', Question::class)->setAction("new");
-        yield MenuItem::linkToCrud('Add reponse', 'fas fa-list', QuestionOption::class)->setAction("new");
+        yield MenuItem::linkToCrud('Add Question', 'fas fa-list', Question::class)->setAction("new");
+        yield MenuItem::linkToCrud('Add Reponse', 'fas fa-list', QuestionOption::class)->setAction("new");
+        yield MenuItem::linkToCrud('Add Type', 'fas fa-list', Type::class)->setAction("new");
+        yield MenuItem::linkToCrud('Add Type', 'fas fa-list', AnswerOption::class);
+
+
+
 
     }
 }
