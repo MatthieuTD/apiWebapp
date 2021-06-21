@@ -37,6 +37,11 @@ class QuestionOption
      */
     private $answerOptions;
 
+    /**
+     * @ORM\Column(type="string", length=1000, nullable=true)
+     */
+    private $img;
+
     public function __construct()
     {
         $this->answerOptions = new ArrayCollection();
@@ -102,5 +107,17 @@ class QuestionOption
     }
     public function __toString(){
         return $this->name;
+    }
+
+    public function getImg(): ?string
+    {
+        return $this->img;
+    }
+
+    public function setImg(?string $img): self
+    {
+        $this->img = $img;
+
+        return $this;
     }
 }
