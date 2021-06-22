@@ -27,10 +27,10 @@ class GetFormController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $testj = $request->getContent();
         $testj = json_decode($testj, true);
-        $mail = $testj["mail"];
+        $token = $testj["token"];
 
         $user = new Answer();
-        $user->setMail($mail);
+        $user->setToken($token);
 
         foreach ($testj["data"] as $key => $question){
             $quest = $this->getDoctrine()
