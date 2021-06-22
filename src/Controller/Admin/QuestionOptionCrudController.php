@@ -19,6 +19,7 @@ class QuestionOptionCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name'),
+            TextField::new("img"),
             AssociationField::new('question')
         ];
     }
