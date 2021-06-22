@@ -4,10 +4,15 @@
 
 test:
   path: /getform
-  controller: App\Controller\GetFormController::test
+  controller: App\Controller\GetFormController::formAff
   methods: POST
 
 getQuest:
   path: /getQuest
-  controller: App\Controller\GetFormController::getData
+  controller: App\Controller\GetQuestionController::getData
+  methods: GET
+
+token:
+  path: /token
+  controller: App\Controller\TokenController::token
   methods: POST

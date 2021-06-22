@@ -22,7 +22,7 @@ class GetFormController extends AbstractController
      * @return Response
      */
 
-    public function test(Request $request) : Response{
+    public function formAff(Request $request) : Response{
 
         $entityManager = $this->getDoctrine()->getManager();
         $testj = $request->getContent();

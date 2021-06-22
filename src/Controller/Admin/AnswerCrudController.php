@@ -22,8 +22,7 @@ class AnswerCrudController extends AbstractCrudController
     {
         return [
             TextField::new("mail","Email"),
-            //ArrayField::new('answerOptions'),
-            AssociationField::new("questions")
+            TextField::new("token")
         ];
     }
 
