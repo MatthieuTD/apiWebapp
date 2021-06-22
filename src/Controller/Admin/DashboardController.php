@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Answer;
 use App\Entity\AnswerOption;
 use App\Entity\Question;
 use App\Entity\QuestionOption;
@@ -17,7 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;
 class DashboardController extends AbstractDashboardController
 {
     /**
-     * @Route("/test", name="admin")
+     * @Route("/", name="admin")
      */
     public function index(): Response
     {
@@ -40,7 +41,10 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Add Question', 'fas fa-list', Question::class)->setAction("new");
         yield MenuItem::linkToCrud('Add Reponse', 'fas fa-list', QuestionOption::class)->setAction("new");
         yield MenuItem::linkToCrud('Add Type', 'fas fa-list', Type::class)->setAction("new");
-        yield MenuItem::linkToCrud('Add Type', 'fas fa-list', AnswerOption::class);
+        yield MenuItem::linkToCrud(' Listes des reponses', 'fas fa-list', QuestionOption::class);
+        yield MenuItem::linkToCrud('Formulaire reponse', 'fas fa-list', Answer::class);
+
+
 
 
 

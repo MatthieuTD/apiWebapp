@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormController!{% endblock %}
+
+{% block body %}
+
+    <div>
+        <table class="table table-striped" >
+            <thead>
+            <tr>
+
+                <th scope="col">Mail</th>
+                <th scope="col"></th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for resp in response %}
+                <tr>
+                    <td>{{ resp.mail }}</td>
+                    <td><a href="/formUser?id={{ resp.id }}">Voir ses résultats</a></td>        </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

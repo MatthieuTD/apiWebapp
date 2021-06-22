@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserFormController!{% endblock %}
+
+{% block body %}
+    <div>
+        <center><div class="">{{ an.mail }}</div></center>
+
+        <table class="table table-striped" >
+            <thead>
+            <tr>
+
+                <th scope="col">Question</th>
+                <th scope="col">Réponse</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for op in anOp %}
+            <tr>
+                <td>{{ op.question.name }}</td>
+                <td>{{ op.questionOption.name }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+
+
+
+
+
+
+    </div>
+
+{% endblock %}
