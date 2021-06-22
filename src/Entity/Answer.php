@@ -22,7 +22,7 @@ class Answer
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $mail;
 
@@ -30,6 +30,11 @@ class Answer
      * @ORM\OneToMany(targetEntity=AnswerOption::class, mappedBy="answer")
      */
     private $answerOptions;
+
+    /**
+     * @ORM\Column(type="string", length=1000, nullable=true)
+     */
+    private $token;
 
     public function __construct()
     {
@@ -79,6 +84,18 @@ class Answer
                 $answerOption->setAnswer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
 
         return $this;
     }
