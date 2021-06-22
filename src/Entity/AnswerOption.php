@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AnswerOptionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass=AnswerOptionRepository::class)
@@ -20,7 +21,7 @@ class AnswerOption
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text",nullable=true)
      */
     private $value;
 
@@ -93,5 +94,8 @@ class AnswerOption
         $this->questionOption = $questionOption;
 
         return $this;
+    }
+    public function __toString(){
+        return $this->value;
     }
 }
