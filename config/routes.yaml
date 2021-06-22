@@ -6,3 +6,8 @@ test:
   path: /getform
   controller: App\Controller\GetFormController::test
   methods: POST
+
+getQuest:
+  path: /getQuest
+  controller: App\Controller\GetFormController::getData
+  methods: POST

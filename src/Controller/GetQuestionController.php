@@ -16,19 +16,34 @@ class GetQuestionController extends AbstractController
    public function getData(){
 
        $questionsRep = $this->getDoctrine()
-           ->getRepository(QuestionOption::class)
+           ->getRepository(Question::class)
            ->findAll();
 
-       //dd($questionsRep);
+      // dd($questionsRep);
        $listQuestion = [];
 
        foreach ($questionsRep as $question){
 
-           $nomQuestion = $question->getQuestion()->getName();
+           $nomQuestion = $question->getName();
+           $idQuestion = $question->getId();
 
-           $listQuestion[$nomQuestion]["options"][] = $question->getName();
 
+        foreach ($question->getQuestionOptions() as $option){
+            $options[] = [
+                "id_option" => $option->getId(),
+                "name" => $option->getName(),
+                "img" => $option->getImg()
+            ];
+        }
 
+           $listQuestion[] = [
+               "id_question" => $idQuestion,
+               "name" => $nomQuestion,
+               "type" => $question->getType()->getName(),
+               "options" => $options
+           ];
+
+        $options = [];
        }
 
 
