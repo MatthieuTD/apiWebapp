@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Answer;
-use App\Entity\AnswerOption;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,21 +11,24 @@ class FormController extends AbstractController
 {
     /**
      * @Route("/form", name="form")
+     * Retourne une liste des personnes ayant répondues
      */
     public function index(): Response
     {
         $data = $this->listForm();
-        //dd($data);
+
         return $this->render('form/index.html.twig', [
             'response' => $data,
         ]);
+
     }
 
+    /**
+     * @return object[]
+     */
     public function listForm(){
-        $reponse = $this->getDoctrine()
-            ->getRepository(Answer::class)->findAll();
-
-
+        $call = $this->getDoctrine();
+        $reponse = $call->getRepository(Answer::class)->findAll();
         return $reponse;
 
     }

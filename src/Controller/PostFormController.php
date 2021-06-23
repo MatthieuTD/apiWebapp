@@ -11,20 +11,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GetFormController extends AbstractController
+class PostFormController extends AbstractController
 {
     /**
-     * @Route("/getform", name="get_form")
+     * @Route("/postform", name="post_form")
+     * Permet de poster une réponse d'un utilisateur
      */
 
     /**
      * @param Request $request
      * @return Response
      */
-
-    public function formAff(Request $request) : Response{
+    public function formAff(Request $request){
 
         $entityManager = $this->getDoctrine()->getManager();
+        $call = $this->getDoctrine();
         $testj = $request->getContent();
         $testj = json_decode($testj, true);
         $token = $testj["token"];
@@ -33,19 +34,15 @@ class GetFormController extends AbstractController
         $user->setToken($token);
 
         foreach ($testj["data"] as $key => $question){
-            $quest = $this->getDoctrine()
-                ->getRepository(Question::class)
-                ->find($key);
+            $quest = $call->getRepository(Question::class)->find($key);
 
             if ( is_array($question) ) {
 
                 foreach ($question as  $option) {
+
                     foreach ($option as $key_op => $op){
 
-
-                    $reponseOp = $this->getDoctrine()
-                        ->getRepository(QuestionOption::class)
-                        ->find($key_op);
+                    $reponseOp = $call->getRepository(QuestionOption::class)->find($key_op);
 
 
                     $rep_user = new AnswerOption();
@@ -56,7 +53,6 @@ class GetFormController extends AbstractController
 
                     $entityManager->persist($rep_user);
                     $entityManager->persist($quest);
-
                     $entityManager->persist($reponseOp);
 
                 }
@@ -68,7 +64,6 @@ class GetFormController extends AbstractController
 
                     $quest->addQuestionOption($reponse);
 
-
                     $rep_user = new AnswerOption();
 
                     $rep_user->setQuestion($quest);
@@ -77,10 +72,7 @@ class GetFormController extends AbstractController
 
                     $entityManager->persist($rep_user);
                     $entityManager->persist($quest);
-
                     $entityManager->persist($reponse);
-
-
                 }
 
                 }

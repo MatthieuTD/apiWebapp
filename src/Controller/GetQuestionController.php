@@ -3,23 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\Question;
-use App\Entity\QuestionOption;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class GetQuestionController extends AbstractController
 {
     /**
      * @Route("/getQuest", name="get_question")
+     *
+     * Retourne sous le format Json les questions avec leurs réponses
      */
    public function getData(){
+       $call = $this->getDoctrine();
+       $questionsRep = $call->getRepository(Question::class)->findAll();
 
-       $questionsRep = $this->getDoctrine()
-           ->getRepository(Question::class)
-           ->findAll();
 
-      // dd($questionsRep);
        $listQuestion = [];
 
        foreach ($questionsRep as $question){
