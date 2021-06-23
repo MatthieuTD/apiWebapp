@@ -20,7 +20,15 @@
             {% for op in anOp %}
             <tr>
                 <td>{{ op.question.name }}</td>
-                <td>{{ op.questionOption.name }}</td>
+                <td>
+                    {% if op.value %}
+                     {{op.questionOption.name }}:   {{  op.value }}
+                    {% else %}
+
+                    {{ op.questionOption.name }}
+                        {% endif %}
+                        </td>
+
             </tr>
             {% endfor %}
             </tbody>

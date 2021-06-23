@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\IsTrue;
 
 class PostFormController extends AbstractController
 {
@@ -43,17 +44,28 @@ class PostFormController extends AbstractController
                     foreach ($option as $key_op => $op){
 
                     $reponseOp = $call->getRepository(QuestionOption::class)->find($key_op);
+                    if (is_int($op)){
+
+                        $rep_user = new AnswerOption();
+
+                        $rep_user->setQuestion($quest);
+                        $rep_user->setQuestionOption($reponseOp);
+                        $user->addAnswerOption($rep_user);
+                        $rep_user->setValue($op);
+                        $entityManager->persist($rep_user);
+                        $entityManager->persist($quest);
+                        $entityManager->persist($reponseOp);
+                    }elseif ($op == true){
+                        $rep_user = new AnswerOption();
+                        $rep_user->setQuestion($quest);
+                        $rep_user->setQuestionOption($reponseOp);
+                        $user->addAnswerOption($rep_user);
+                        $entityManager->persist($rep_user);
+                        $entityManager->persist($quest);
+                        $entityManager->persist($reponseOp);
+                    }
 
 
-                    $rep_user = new AnswerOption();
-
-                    $rep_user->setQuestion($quest);
-                    $rep_user->setQuestionOption($reponseOp);
-                    $user->addAnswerOption($rep_user);
-
-                    $entityManager->persist($rep_user);
-                    $entityManager->persist($quest);
-                    $entityManager->persist($reponseOp);
 
                 }
             }}
@@ -80,6 +92,6 @@ class PostFormController extends AbstractController
 
         $entityManager->flush();
 
-        return $this->json($question);
+        return $this->json("SUCCES");
     }
 }
