@@ -18,7 +18,17 @@
 
             {% for resp in response %}
                 <tr>
-                    <td>{{ resp.mail }}</td>
+                    <td>
+                        {% if resp.mail %}
+
+                        {{ resp.mail }}
+                        {% else %}
+                            Anonyme
+                    {% endif %}
+
+
+
+                    </td>
                     <td><a href="/formUser?id={{ resp.id }}">Voir ses résultats</a></td>        </tr>
             {% endfor %}
             </tbody>

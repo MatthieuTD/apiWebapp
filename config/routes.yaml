@@ -3,8 +3,8 @@
 #    controller: App\Controller\DefaultController::index
 
 test:
-  path: /getform
-  controller: App\Controller\GetFormController::formAff
+  path: /postform
+  controller: App\Controller\PostFormController::formAff
   methods: POST
 
 getQuest:
